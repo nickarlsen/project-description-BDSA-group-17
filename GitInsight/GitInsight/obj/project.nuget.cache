@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "+SO551m6EpKzX6k2FfDnFOaBJFOIPBLuVdziMXzasoBBm9/7prVomLe2X6ZsgTmcRXVRkbaZSma+UZuC9ikI/A==",
+  "dgSpecHash": "VYrJhpz6VX21KAY/kJ5mzLhu5QZrD09QUFOvta1mQLsJDCkHmmKNU+Tn57CZdjGVY+evUW0g3M7IODAmBz3sDg==",
   "success": true,
   "projectFilePath": "C:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\GitInsight.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nicka\\.nuget\\packages\\libgit2sharp\\0.26.2\\libgit2sharp.0.26.2.nupkg.sha512",
-    "C:\\Users\\nicka\\.nuget\\packages\\libgit2sharp.nativebinaries\\2.0.306\\libgit2sharp.nativebinaries.2.0.306.nupkg.sha512"
+    "C:\\Users\\nicka\\.nuget\\packages\\libgit2sharp.nativebinaries\\2.0.306\\libgit2sharp.nativebinaries.2.0.306.nupkg.sha512",
+    "C:\\Users\\nicka\\.nuget\\packages\\npgsql\\6.0.7\\npgsql.6.0.7.nupkg.sha512",
+    "C:\\Users\\nicka\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
   ],
   "logs": []
 }

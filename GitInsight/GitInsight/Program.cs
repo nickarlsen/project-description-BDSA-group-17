@@ -2,6 +2,8 @@
 {
     private static void Main(string[] args)
     {
+        
+
         Console.WriteLine("Please provide a Git repository from your local device");
         Console.Write("Here: ");
         var workingDirectory = Console.ReadLine();
@@ -24,16 +26,57 @@
             }
             else Console.WriteLine("Invalid input");    
         }
+
+        StartConnectionDB();
         // Console.WriteLine("Thats all for now folks!");
         // Console.WriteLine(GetAllCommitDates(workingDirectory));
         
     }
+
+    public async static void StartConnectionDB()
+    {
+        Console.WriteLine("Connecting to database...");
+        //var connString = "postgres://postgres:postgrespw@localhost:49153"; 
+        var connString = "Host=host.docker.internal;Username=postgres;Password=postgrespw;Database=GitInsight";
+        //var connString = "Host=postgres;Username=postgres;Password=postgrespw;Database=GitInsight";
+
+        Console.WriteLine("1");
+        await using var conn = new NpgsqlConnection(connString);
+        Console.WriteLine("2");
+        //await conn.OpenAsync();
+        conn.Open();
+
+        Console.WriteLine("Connected to database!");
+
+        // Insert some data
+        /*await using (var cmd = new NpgsqlCommand("INSERT INTO gitrepos (id, name) VALUES (1, 'repo1')", conn))
+        {
+            cmd.Parameters.AddWithValue("Hello world");
+            await cmd.ExecuteNonQueryAsync();
+        }*/
+
+
+        Console.WriteLine("Reading data from table gitrepos");
+        // Retrieve all rows
+        await using (var cmd = new NpgsqlCommand("SELECT name FROM gitrepos", conn))
+        await using (var reader = await cmd.ExecuteReaderAsync())
+        
+        {
+            while (await reader.ReadAsync())
+            {
+                Console.WriteLine("printing select statement:");
+                Console.WriteLine(reader.GetString(0));
+            }
+        }
+    } 
 
     public static void GitInsightFreq(string path) 
     {
         Console.WriteLine("Getting commits from: ", path);
         using (var repo = new Repository(path))
         {
+
+            //Console.WriteLine(repo.);
             var commits = repo.Commits.ToList();
             var dates = GetAllCommitDates(path);
             var commitsQuery =
@@ -42,6 +85,7 @@
                         select new {g, commit = g.ToList().Count()};
             foreach (var i in commitsQuery)
             {
+                
                 Console.WriteLine(i.commit + " " + i.g.First().Author.When.Date.ToString("dd/MM/yyyy"));
                 //Console.Write(" ");
                 //Console.Write(i.g.First().Author.When.Date.ToString("dd/MM/yyyy")); // Will give you smth like 25/05/2011
@@ -89,7 +133,7 @@
 
     public static IEnumerable<string> GetAllAuthors(List<Commit> commits)
     {
-        return commits.DistinctBy(a => a.Author.Name).Select(a => a.Author.Name);
+        return commits.DistinctBy(c => c.Author.Name).Select(c => c.Author.Name);
     }
 
     public static int NumberOfCommitsAll(string path)

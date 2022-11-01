@@ -27,8 +27,6 @@
             "24": 0,
             "25": 0,
             "26": 0,
-            "27": 0,
-            "28": 0,
             "30": 0
           },
           "Branches": [
@@ -97,9 +95,6 @@
             "43": 0,
             "44": 0,
             "45": 0,
-            "46": 0,
-            "47": 0,
-            "49": 0,
             "51": 0,
             "52": 0,
             "53": 0
@@ -107,7 +102,7 @@
           "Branches": [
             {
               "Line": 43,
-              "Offset": 229,
+              "Offset": 220,
               "EndOffset": 125,
               "Path": 1,
               "Ordinal": 1,
@@ -115,8 +110,8 @@
             },
             {
               "Line": 43,
-              "Offset": 229,
-              "EndOffset": 231,
+              "Offset": 220,
+              "EndOffset": 222,
               "Path": 0,
               "Ordinal": 0,
               "Hits": 0
@@ -150,97 +145,95 @@
             "79": 0,
             "80": 0,
             "81": 0,
-            "82": 0,
             "84": 0,
-            "85": 0,
+            "86": 0,
             "87": 0,
-            "88": 0,
-            "89": 0
+            "88": 0
           },
           "Branches": [
             {
               "Line": 63,
-              "Offset": 397,
+              "Offset": 380,
               "EndOffset": 53,
               "Path": 1,
               "Ordinal": 7,
               "Hits": 0
             },
             {
-              "Line": 67,
-              "Offset": 143,
-              "EndOffset": 88,
+              "Line": 68,
+              "Offset": 149,
+              "EndOffset": 99,
               "Path": 1,
               "Ordinal": 3,
               "Hits": 0
             },
             {
-              "Line": 69,
-              "Offset": 121,
-              "EndOffset": 123,
+              "Line": 70,
+              "Offset": 127,
+              "EndOffset": 129,
               "Path": 0,
               "Ordinal": 0,
               "Hits": 0
             },
             {
-              "Line": 69,
-              "Offset": 121,
-              "EndOffset": 135,
+              "Line": 70,
+              "Offset": 127,
+              "EndOffset": 141,
               "Path": 1,
               "Ordinal": 1,
               "Hits": 0
             },
             {
-              "Line": 67,
-              "Offset": 143,
-              "EndOffset": 145,
+              "Line": 68,
+              "Offset": 149,
+              "EndOffset": 151,
               "Path": 0,
               "Ordinal": 2,
               "Hits": 0
             },
             {
-              "Line": 78,
-              "Offset": 373,
-              "EndOffset": 250,
+              "Line": 79,
+              "Offset": 356,
+              "EndOffset": 256,
               "Path": 1,
               "Ordinal": 5,
               "Hits": 0
             },
             {
-              "Line": 78,
-              "Offset": 373,
-              "EndOffset": 375,
+              "Line": 79,
+              "Offset": 356,
+              "EndOffset": 358,
               "Path": 0,
               "Ordinal": 4,
               "Hits": 0
             },
             {
               "Line": 63,
-              "Offset": 397,
-              "EndOffset": 402,
+              "Offset": 380,
+              "EndOffset": 385,
               "Path": 0,
               "Ordinal": 6,
               "Hits": 0
             }
           ]
         },
-        "System.Collections.Generic.IEnumerable`1<System.String> Program::GetAllAuthors(System.Collections.Generic.List`1<LibGit2Sharp.Commit>)": {
+        "System.Collections.Generic.IEnumerable`1<LibGit2Sharp.Signature> Program::GetAllAuthors(System.Collections.Generic.List`1<LibGit2Sharp.Commit>)": {
           "Lines": {
-            "92": 1,
-            "93": 23,
-            "94": 1
+            "91": 1,
+            "92": 23,
+            "93": 1
           },
           "Branches": []
         },
         "System.Int32 Program::NumberOfCommitsAll(System.String)": {
           "Lines": {
+            "96": 1,
             "97": 1,
             "98": 1,
             "99": 1,
             "100": 1,
             "101": 1,
-            "102": 1,
-            "104": 1
+            "103": 1
           },
           "Branches": []
         }
@@ -248,23 +241,23 @@
       "Program/<GetAllCommitDates>d__5": {
         "System.Boolean Program/<GetAllCommitDates>d__5::MoveNext()": {
           "Lines": {
+            "106": 1,
             "107": 1,
             "108": 1,
             "109": 1,
-            "110": 1,
-            "111": 4,
+            "110": 4,
+            "111": 1,
             "112": 1,
             "113": 1,
             "114": 1,
             "115": 1,
-            "116": 1,
+            "117": 0,
             "118": 0,
-            "119": 0,
-            "120": 0
+            "119": 0
           },
           "Branches": [
             {
-              "Line": 111,
+              "Line": 110,
               "Offset": 299,
               "EndOffset": 119,
               "Path": 1,
@@ -272,7 +265,7 @@
               "Hits": 1
             },
             {
-              "Line": 111,
+              "Line": 110,
               "Offset": 299,
               "EndOffset": 304,
               "Path": 0,
@@ -351,11 +344,33 @@
             "76": 1,
             "79": 1,
             "80": 1,
-            "83": 1,
-            "85": 1,
-            "87": 1
+            "81": 1,
+            "82": 11,
+            "83": 4,
+            "84": 4,
+            "85": 4,
+            "88": 1,
+            "90": 1,
+            "92": 1
           },
-          "Branches": []
+          "Branches": [
+            {
+              "Line": 82,
+              "Offset": 143,
+              "EndOffset": 110,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 4
+            },
+            {
+              "Line": 82,
+              "Offset": 143,
+              "EndOffset": 145,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            }
+          ]
         },
         "System.Void GitInsight.tests.UnitTest1::.ctor()": {
           "Lines": {

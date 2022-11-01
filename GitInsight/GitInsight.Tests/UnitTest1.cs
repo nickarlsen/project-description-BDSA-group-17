@@ -78,6 +78,11 @@ public class UnitTest1
             //Act
             var expected = new List<string> {"nkar", "HelgeCPH", "Rasmus Lystrøm", "Paolo Tell"};
             var actual = GetAllAuthors(commits).ToList();
+            /*var actual = new List<string>();
+            foreach (Signature author in authors)
+            {
+                actual.Add(author.Name);
+            }*/
 
             //Assert
             Assert.Equal(expected, actual);

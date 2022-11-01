@@ -130,6 +130,10 @@
             "LibGit2Sharp": {
               "target": "Package",
               "version": "[0.26.2, )"
+            },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[6.0.7, )"
             }
           },
           "imports": [

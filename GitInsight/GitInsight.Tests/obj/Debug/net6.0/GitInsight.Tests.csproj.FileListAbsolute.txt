@@ -118,3 +118,4 @@ C:\Users\nicka\OneDrive\Skrivebord\BDSA\Repos\project-description-BDSA-group-17\
 C:\Users\nicka\OneDrive\Skrivebord\BDSA\Repos\project-description-BDSA-group-17\GitInsight\GitInsight.tests\bin\Debug\net6.0\runtimes\win-x64\native\git2-106a5f2.pdb
 C:\Users\nicka\OneDrive\Skrivebord\BDSA\Repos\project-description-BDSA-group-17\GitInsight\GitInsight.tests\bin\Debug\net6.0\runtimes\win-x86\native\git2-106a5f2.dll
 C:\Users\nicka\OneDrive\Skrivebord\BDSA\Repos\project-description-BDSA-group-17\GitInsight\GitInsight.tests\bin\Debug\net6.0\runtimes\win-x86\native\git2-106a5f2.pdb
+C:\Users\nicka\OneDrive\Skrivebord\BDSA\Repos\project-description-BDSA-group-17\GitInsight\GitInsight.tests\bin\Debug\net6.0\Npgsql.dll
