@@ -1,4 +1,6 @@
-﻿public class Program
+﻿using Microsoft.Data.Sqlite;
+
+public class Program
 {
     private static void Main(string[] args)
     {
@@ -27,24 +29,87 @@
             else Console.WriteLine("Invalid input");    
         }
 
-        StartConnectionDB();
+        StartConnectionDBLocal();
         // Console.WriteLine("Thats all for now folks!");
         // Console.WriteLine(GetAllCommitDates(workingDirectory));
         
     }
 
+
+    public static void StartConnectionDBLocal()
+    {
+        string cs = "Data Source=:memory:";
+        //string cs = @"URI=file:C:\Users\nicka\OneDrive\Skrivebord\BDSA\Repos\project-description-BDSA-group-17\GitInsight\GitInsight\GitInsight.db";
+        //string cs = @"C:\Users\nicka\OneDrive\Skrivebord\BDSA\Repos\project-description-BDSA-group-17\GitInsight\GitInsight\GitInsight.db";
+        string stm = "SELECT SQLITE_VERSION()";
+
+        var con = new SqliteConnection(cs);
+        con.Open();
+
+        var cmd = new SqliteCommand(stm, con);
+        string version = cmd.ExecuteScalar().ToString();
+
+        Console.WriteLine($"SQLite version: {version}");
+
+        cmd.CommandText = "DROP TABLE IF EXISTS GitRepos";
+        cmd.ExecuteNonQuery();
+
+        cmd.CommandText = @"CREATE TABLE GitRepos (id INTEGER PRIMARY KEY, name TEXT)";
+        cmd.ExecuteNonQuery();
+
+        cmd.CommandText = @"INSERT INTO GitRepos (id, name) VALUES (1, 'assignment-05-group-12')";
+        cmd.ExecuteNonQuery();
+
+        cmd.CommandText = @"INSERT INTO GitRepos (id, name) VALUES (2, 'Magnus repo')";
+        cmd.ExecuteNonQuery();
+
+        var gitrepo = "assignment-05-group-12";
+        stm = $"SELECT * FROM GitRepos WHERE name = '{gitrepo}'";
+        cmd = new SqliteCommand(stm, con);
+        SqliteDataReader rdr = cmd.ExecuteReader();
+
+        while (rdr.Read())
+        {
+            Console.WriteLine($"{rdr.GetInt32(0)} {rdr.GetString(1)}");
+        }
+
+        
+
+        stm = "SELECT * FROM GitRepos";
+
+        cmd = new SqliteCommand(stm, con);
+        rdr = cmd.ExecuteReader();
+
+        while (rdr.Read())
+        {
+            Console.WriteLine($"{rdr.GetInt32(0)} {rdr.GetString(1)}");
+        }
+
+        
+    }
+    
     public async static void StartConnectionDB()
     {
         Console.WriteLine("Connecting to database...");
-        //var connString = "postgres://postgres:postgrespw@localhost:49153"; 
-        var connString = "Host=host.docker.internal;Username=postgres;Password=postgrespw;Database=GitInsight";
+        //var connString = "postgres://postgres:postgrespw@localhost:49156"; 
+        //var connString = "Host=host.docker.internal;Username=postgres;Password=postgrespw;Database=GitInsight";
         //var connString = "Host=postgres;Username=postgres;Password=postgrespw;Database=GitInsight";
+        //var connString = "Server=localpg;Database=GitInsight;Username=postgres;Host=postgres;Password=postgrespw;";
+        //Port=49156
+        /*var connStringBuilder = new NpgsqlConnectionStringBuilder();
 
         Console.WriteLine("1");
-        await using var conn = new NpgsqlConnection(connString);
+        connStringBuilder.Host = "host.docker.internal";
+        connStringBuilder.Username = "postgres";
+        connStringBuilder.Password = "postgrespw";
+        connStringBuilder.Database = "GitInsight";
+        connStringBuilder.Port = 49156;
+        
+        Console.WriteLine(connStringBuilder.ConnectionString);
+        await using var conn = new NpgsqlConnection(connStringBuilder.ConnectionString);*/
         Console.WriteLine("2");
         //await conn.OpenAsync();
-        conn.Open();
+        //conn.Open();
 
         Console.WriteLine("Connected to database!");
 
@@ -58,7 +123,7 @@
 
         Console.WriteLine("Reading data from table gitrepos");
         // Retrieve all rows
-        await using (var cmd = new NpgsqlCommand("SELECT name FROM gitrepos", conn))
+        /*await using (var cmd = new NpgsqlCommand("SELECT name FROM gitrepos", conn))
         await using (var reader = await cmd.ExecuteReaderAsync())
         
         {
@@ -67,7 +132,7 @@
                 Console.WriteLine("printing select statement:");
                 Console.WriteLine(reader.GetString(0));
             }
-        }
+        }*/
     } 
 
     public static void GitInsightFreq(string path) 
@@ -75,7 +140,10 @@
         Console.WriteLine("Getting commits from: ", path);
         using (var repo = new Repository(path))
         {
-
+            Console.WriteLine("Printing Path info:");
+            Console.WriteLine(repo.Info.Path.ToString());
+            
+            
             //Console.WriteLine(repo.);
             var commits = repo.Commits.ToList();
             var dates = GetAllCommitDates(path);
