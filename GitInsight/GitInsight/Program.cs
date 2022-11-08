@@ -35,15 +35,19 @@ public class Program
         
     }
 
-
+    //TODO Set the id to be a primary key which has the online url to the repo
     public static void StartConnectionDBLocal()
     {
-        string cs = "Data Source=:memory:";
+        //string cs = "Data Source=:memory:";
         //string cs = @"URI=file:C:\Users\nicka\OneDrive\Skrivebord\BDSA\Repos\project-description-BDSA-group-17\GitInsight\GitInsight\GitInsight.db";
+        var ds = new SqliteConnectionStringBuilder
+        {
+            DataSource = @"C:\Users\nicka\OneDrive\Skrivebord\BDSA\Repos\project-description-BDSA-group-17\GitInsight\GitInsight\GitInsight.db"
+        };
         //string cs = @"C:\Users\nicka\OneDrive\Skrivebord\BDSA\Repos\project-description-BDSA-group-17\GitInsight\GitInsight\GitInsight.db";
         string stm = "SELECT SQLITE_VERSION()";
 
-        var con = new SqliteConnection(cs);
+        var con = new SqliteConnection(ds.ConnectionString);
         con.Open();
 
         var cmd = new SqliteCommand(stm, con);
@@ -61,6 +65,9 @@ public class Program
         cmd.ExecuteNonQuery();
 
         cmd.CommandText = @"INSERT INTO GitRepos (id, name) VALUES (2, 'Magnus repo')";
+        cmd.ExecuteNonQuery();
+
+        cmd.CommandText = @"INSERT INTO GitRepos (id, name) VALUES (3, 'nkar repo')";
         cmd.ExecuteNonQuery();
 
         var gitrepo = "assignment-05-group-12";
@@ -135,14 +142,16 @@ public class Program
         }*/
     } 
 
-    public static void GitInsightFreq(string path) 
+    //TODO make a try-catch to stop people from using local repos that have not been set upstream
+    //exeption: System.InvalidOperationException
+    public static void GitInsightFreq(string path)
     {
         Console.WriteLine("Getting commits from: ", path);
         using (var repo = new Repository(path))
         {
             Console.WriteLine("Printing Path info:");
             Console.WriteLine(repo.Info.Path.ToString());
-            
+            Console.WriteLine(repo.Network.Remotes.First().PushUrl.ToString());
             
             //Console.WriteLine(repo.);
             var commits = repo.Commits.ToList();
@@ -155,10 +164,6 @@ public class Program
             {
                 
                 Console.WriteLine(i.commit + " " + i.g.First().Author.When.Date.ToString("dd/MM/yyyy"));
-                //Console.Write(" ");
-                //Console.Write(i.g.First().Author.When.Date.ToString("dd/MM/yyyy")); // Will give you smth like 25/05/2011
-                //Console.Write(i.g.First().Author.When.Date.Date);
-                //Console.WriteLine("");
                 
             }
         }
