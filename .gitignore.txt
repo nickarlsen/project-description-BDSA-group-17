@@ -1,0 +1,5 @@
+somefolder/*
+!somefolder/.gitkeep 
+.vs/
+.vscode/
+.db
