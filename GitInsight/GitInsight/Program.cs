@@ -6,69 +6,84 @@ public class Program
     {
         
 
-        Console.WriteLine("Please provide a Git repository from your local device");
-        Console.Write("Here: ");
-        var workingDirectory = Console.ReadLine();
-        Console.WriteLine(""); //Whitespace
-        string mode = "";
-        bool doWhile = true;
-        while (doWhile) 
-        {
-            Console.WriteLine("Please select either Author mode(a) or Frequency Mode(f)");
-            mode = Console.ReadLine()!;
-            if (mode.Equals("a"))
-            {
-                GitInsightAuth(workingDirectory!);
-                doWhile = false;
-            } 
-            else if (mode.Equals("f"))
-            {
-                GitInsightFreq(workingDirectory!);
-                doWhile = false;
-            }
-            else Console.WriteLine("Invalid input");    
-        }
+        Console.WriteLine("Please provide a Git repository url in the form \"owner/repository\"");
+        Console.WriteLine("Here: ");
+        var httpsString = "https://github.com/";
+        var repoUrl = Console.ReadLine();
+        var workingDirectory = httpsString + repoUrl;
 
-        StartConnectionDBLocal();
-        // Console.WriteLine("Thats all for now folks!");
-        // Console.WriteLine(GetAllCommitDates(workingDirectory));
+        //TODO Make a directory locally and clone into that
+        var localRepoPath = @"C:\Users\nicka\OneDrive\Skrivebord\BDSA\Repos";
+        try
+        {
+            System.IO.Directory.CreateDirectory(localRepoPath + $@"\{repoUrl}");
+            localRepoPath += $@"\{repoUrl}";
+            var result = Repository.Clone(workingDirectory, localRepoPath, new CloneOptions()
+            {
+                BranchName = "main",
+            });
+            
+            
+            string mode = "";
+            bool doWhile = true;
+            while (doWhile) 
+            {
+                Console.WriteLine("Please select either Author mode(a) or Frequency Mode(f)");
+                mode = Console.ReadLine()!;
+                if (mode.Equals("a"))
+                {
+                    GitInsightAuth(localRepoPath!);
+                    doWhile = false;
+                } 
+                else if (mode.Equals("f"))
+                {
+                    GitInsightFreq(localRepoPath!);
+                    doWhile = false;
+                }
+                else Console.WriteLine("Invalid input");    
+            }
+            StartConnectionDBLocal();
+        }
+        catch (System.Exception e)
+        {
+            
+            Console.Write(e.StackTrace);
+        }
+        
+
+
+        
+        
         
     }
 
-    //TODO Set the id to be a primary key which has the online url to the repo
     public static void StartConnectionDBLocal()
     {
-        //string cs = "Data Source=:memory:";
-        //string cs = @"URI=file:C:\Users\nicka\OneDrive\Skrivebord\BDSA\Repos\project-description-BDSA-group-17\GitInsight\GitInsight\GitInsight.db";
         var ds = new SqliteConnectionStringBuilder
         {
             DataSource = @"C:\Users\nicka\OneDrive\Skrivebord\BDSA\Repos\project-description-BDSA-group-17\GitInsight\GitInsight\GitInsight.db"
         };
-        //string cs = @"C:\Users\nicka\OneDrive\Skrivebord\BDSA\Repos\project-description-BDSA-group-17\GitInsight\GitInsight\GitInsight.db";
+        
         string stm = "SELECT SQLITE_VERSION()";
 
         var con = new SqliteConnection(ds.ConnectionString);
         con.Open();
 
         var cmd = new SqliteCommand(stm, con);
-        string version = cmd.ExecuteScalar().ToString();
-
-        Console.WriteLine($"SQLite version: {version}");
-
-        cmd.CommandText = "DROP TABLE IF EXISTS GitRepos";
+        
+        //TODO Read and load the .sql file into db
+        /*cmd.CommandText = "Drop Table if exists GitRepos";
         cmd.ExecuteNonQuery();
 
-        cmd.CommandText = @"CREATE TABLE GitRepos (id INTEGER PRIMARY KEY, name TEXT)";
+        cmd.CommandText = "Drop Table if exists Commits";
         cmd.ExecuteNonQuery();
 
-        cmd.CommandText = @"INSERT INTO GitRepos (id, name) VALUES (1, 'assignment-05-group-12')";
+        cmd.CommandText = "Create Table Commits (id INTEGER Primary Key,repoId INTEGER REFERENCES GitRepos(id),author VARCHAR(50),commitDate DATE)";
         cmd.ExecuteNonQuery();
 
-        cmd.CommandText = @"INSERT INTO GitRepos (id, name) VALUES (2, 'Magnus repo')";
-        cmd.ExecuteNonQuery();
+        cmd.CommandText = "Create Table GitRepos (author VARCHAR(50),name VARCHAR(50),Primary Key(author, name))";
+        cmd.ExecuteNonQuery();*/
 
-        cmd.CommandText = @"INSERT INTO GitRepos (id, name) VALUES (3, 'nkar repo')";
-        cmd.ExecuteNonQuery();
 
         var gitrepo = "assignment-05-group-12";
         stm = $"SELECT * FROM GitRepos WHERE name = '{gitrepo}'";
@@ -77,11 +92,9 @@ public class Program
 
         while (rdr.Read())
         {
-            Console.WriteLine($"{rdr.GetInt32(0)} {rdr.GetString(1)}");
+            Console.WriteLine($"{rdr.GetString(0)} {rdr.GetString(1)}");
         }
-
         
-
         stm = "SELECT * FROM GitRepos";
 
         cmd = new SqliteCommand(stm, con);
@@ -89,13 +102,108 @@ public class Program
 
         while (rdr.Read())
         {
-            Console.WriteLine($"{rdr.GetInt32(0)} {rdr.GetString(1)}");
+            Console.WriteLine($"{rdr.GetString(0)} {rdr.GetString(1)}");
         }
+        rdr.Close();
+
+        InsertRepoIntoDB("tobias/tobias", cmd);
+    }
+
+    public static void InsertRepoIntoDB(string url, SqliteCommand cmd)
+    {
+        var urlArray = url.Split("/");
+        var author = urlArray.First();
+        var name = urlArray.Last();
+
+        var stm = $"SELECT * FROM GitRepos WHERE name = '{author}' AND author = '{name}'";
+        cmd.CommandText = stm;
+        SqliteDataReader rdr = cmd.ExecuteReader();
 
         
+        
+        if (rdr.HasRows)
+        {
+            rdr.Close();
+            Console.WriteLine("Repo already exists in DB");
+            UpdateCommits(url, cmd);
+        }
+        else
+        {
+            Console.WriteLine("Repo does not exist in DB");
+            rdr.Close();
+            cmd.CommandText = $"INSERT INTO GitRepos (author, name) VALUES ('{author}', '{name}')";
+            cmd.ExecuteNonQuery();
+
+            InsertCommits(url, cmd);
+        }
     }
     
-    public async static void StartConnectionDB()
+
+    public static void InsertCommits(string url, SqliteCommand cmd)
+    {
+        var urlArray = url.Split("/");
+        var urlAuthor = urlArray.First();
+        var name = urlArray.Last();
+
+        var repo = new Repository(url);
+        var commits = repo.Commits;
+        foreach (var commit in commits)
+        {
+            var author = commit.Author.Name;
+            var date = commit.Author.When;
+            var repoKey = (urlArray.First(), urlArray.Last());
+            cmd.CommandText = $"INSERT INTO Commits (repoKey, author, commitDate) VALUES ({repoKey}, '{author}', '{date}')";
+            cmd.ExecuteNonQuery();
+        }
+    }
+    public static void UpdateCommits(string url, SqliteCommand cmd)
+    {    
+        var urlArray = url.Split("/");
+        var urlAuthor = urlArray.First();
+        var name = urlArray.Last();
+
+        var stm = $"SELECT Count(*) FROM Commits";
+        cmd.CommandText = stm;
+        SqliteDataReader rdr = cmd.ExecuteReader();
+
+        
+        if (!rdr.HasRows)
+        {
+            rdr.Close();
+            InsertCommits(url, cmd);
+            
+        }
+        else
+        {
+
+            rdr.Close();
+
+            var repo = new Repository(url);
+            var commits = repo.Commits;
+            if (commits.Count() == rdr.GetInt32(0))
+            {
+                Console.WriteLine("No new commits");
+            }
+            else
+            {
+                Console.WriteLine("New commits");
+                var neededCommits = rdr.GetInt32(0) - commits.Count();
+                for (int i = 0; i < neededCommits; i++)
+                {
+                    var commit = commits.ElementAt(i);
+                    var author = commit.Author.Name;
+                    var date = commit.Author.When;
+                    var repoKey = (urlArray.First(), urlArray.Last());
+                    cmd.CommandText = $"INSERT INTO Commits (repoKey, author, commitDate) VALUES ({repoKey}, '{author}', '{date}')";
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            Console.WriteLine("commits already exists in DB");
+        } 
+    }
+    
+    //Attempted method to integrate Docker DB, Potentially used in the future
+    public static void StartConnectionDB()
     {
         Console.WriteLine("Connecting to database...");
         //var connString = "postgres://postgres:postgrespw@localhost:49156"; 
@@ -142,8 +250,8 @@ public class Program
         }*/
     } 
 
-    //TODO make a try-catch to stop people from using local repos that have not been set upstream
-    //exeption: System.InvalidOperationException
+    
+    
     public static void GitInsightFreq(string path)
     {
         Console.WriteLine("Getting commits from: ", path);
@@ -196,10 +304,8 @@ public class Program
                 foreach (var i in commitsQuery)
                 {
                     Console.WriteLine("    " + i.commit + " " + i.g.First().Author.When.Date.ToString("dd/MM/yyyy"));
-                    //Console.Write(" ");
-                    //Console.WriteLine(i.g.First().Author.When.Date.ToString("dd/MM/yyyy")); // Will give you smth like 25/05/2011
+                    
                 }
-
             }
         }
     }
@@ -230,22 +336,8 @@ public class Program
                 var currMonth = i.Author.When.Month;
                 var currYear = i.Author.When.Year;
                 yield return new DateTimeOffset(new DateTime(currYear, currMonth, currDay));
-                //yield return i.Author.When;
+                
             }
         }
     }
-
-/*    public static void GetCommitsForDate (string path, DateTimeOffset date)
-    {
-        using (var repo = new Repository(path))
-        {
-            //var date = new DateTimeOffset(new DateTime());
-            //var filter = new CommitFilter { SinceList = new[] { repo.Branches } };
-            
-            var commitLog = repo.Commits.QueryBy(new CommitFilter() {} );
-            var commits = commitLog.Where(c => c.Committer.When == date);
-            //commits^^ list of commits w the specific date
-        }
-    } */
-    
 }
