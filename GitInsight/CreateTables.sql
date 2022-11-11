@@ -10,7 +10,7 @@ Create Table GitRepos (
 
 Create Table Commits (
 	id INTEGER Primary Key,
-	CONSTRAINT repoKey INTEGER REFERENCES GitRepos(owner, name),
+	CONSTRAINT repoKey REFERENCES GitRepos(owner, name),
 	author VARCHAR(50),
 	commitDate DATE
 );

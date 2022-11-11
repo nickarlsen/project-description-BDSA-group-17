@@ -1,4 +1,4 @@
-
+namespace GitInsight;
 public class GitFetcher
 {
     private DBController dbController;
@@ -11,8 +11,8 @@ public class GitFetcher
         var httpsString = "https://github.com/";
         var workingDirectory = httpsString + repoUrl;
         dbController = new DBController();
-        dbController.StartConnectionDBLocal();
-        localRepoPath = @"GitInsight\ClonedRepos";
+        
+        localRepoPath = @"ClonedRepos";
         try
         {
             System.IO.Directory.CreateDirectory(localRepoPath + $@"\{repoUrl}");
@@ -21,11 +21,14 @@ public class GitFetcher
             {
                 BranchName = "main",
             });
+            dbController.StartConnectionDBLocal(result);
         }
         catch (System.Exception e)
         {
-            Console.Write(e.StackTrace);
+            Console.WriteLine(e.Message);
+            Console.WriteLine(e.StackTrace);
         }
+        
     }
 
     public void CheckDBData() 
@@ -33,7 +36,7 @@ public class GitFetcher
         
     }
 
-    public void GitInsightFreq()
+    public IEnumerable<Freq> GitInsightFreq()
     {
         Console.WriteLine("Getting commits from: ", localRepoPath);
         using (var repo = new Repository(localRepoPath))
@@ -49,16 +52,18 @@ public class GitFetcher
                         from commit in commits
                         group commit by commit.Author.When.Date into g
                         select new {g, commit = g.ToList().Count()};
+            
+            
             foreach (var i in commitsQuery)
             {
                 
                 Console.WriteLine(i.commit + " " + i.g.First().Author.When.Date.ToString("dd/MM/yyyy"));
-                
+                yield return(new Freq(i.commit, i.g.First().Author.When.Date));
             }
         }
     }
 
-    public void GitInsightAuth() 
+    public IEnumerable<Author> GitInsightAuth() 
     {
         Console.WriteLine("Getting commits from: ", localRepoPath);
         using (var repo = new Repository(localRepoPath))
@@ -82,11 +87,18 @@ public class GitFetcher
                         from commit in tempCommitList
                         group commit by commit.Author.When.Date into g
                         select new {g, commit = g.ToList().Count()};
+
+                var tempFreqs = new List<Freq>();
                 foreach (var i in commitsQuery)
                 {
                     Console.WriteLine("    " + i.commit + " " + i.g.First().Author.When.Date.ToString("dd/MM/yyyy"));
+                    tempFreqs.Add(new Freq(i.commit, i.g.First().Author.When.Date));
                     
                 }
+
+                
+                yield return new Author(author, tempFreqs);
+                
             }
         }
     }    

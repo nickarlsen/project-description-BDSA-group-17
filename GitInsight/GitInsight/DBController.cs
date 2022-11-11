@@ -1,4 +1,4 @@
-
+namespace GitInsight;
 public class DBController
 {
 
@@ -8,7 +8,7 @@ public class DBController
 
     }
 
-    public void StartConnectionDBLocal()
+    public void StartConnectionDBLocal(string localRepoPath)
     {
         var ds = new SqliteConnectionStringBuilder
         {
@@ -23,21 +23,21 @@ public class DBController
         var cmd = new SqliteCommand(stm, con);
         
         //TODO Read and load the .sql file into db
-        /*cmd.CommandText = "Drop Table if exists GitRepos";
+        cmd.CommandText = "Drop Table if exists GitRepos";
         cmd.ExecuteNonQuery();
 
         cmd.CommandText = "Drop Table if exists Commits";
         cmd.ExecuteNonQuery();
 
-        cmd.CommandText = "Create Table Commits (id INTEGER Primary Key,repoId INTEGER REFERENCES GitRepos(id),author VARCHAR(50),commitDate DATE)";
+        cmd.CommandText = "Create Table Commits (id INTEGER Primary Key, CONSTRAINT repoKey FOREIGN KEY REFERENCES GitRepos(owner, name),author VARCHAR(50),commitDate DATE)";
         cmd.ExecuteNonQuery();
 
-        cmd.CommandText = "Create Table GitRepos (author VARCHAR(50),name VARCHAR(50),Primary Key(author, name))";
-        cmd.ExecuteNonQuery();*/
+        cmd.CommandText = "Create Table GitRepos (owner VARCHAR(50),name VARCHAR(50),Primary Key(owner, name))";
+        cmd.ExecuteNonQuery();
 
 
-        var gitrepo = "assignment-05-group-12";
-        stm = $"SELECT * FROM GitRepos WHERE name = '{gitrepo}'";
+        
+        stm = $"SELECT * FROM GitRepos WHERE name = '{localRepoPath}'";
         cmd = new SqliteCommand(stm, con);
         SqliteDataReader rdr = cmd.ExecuteReader();
 
