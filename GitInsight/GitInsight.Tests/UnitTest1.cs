@@ -68,7 +68,61 @@ public class UnitTest1
     [Fact]
     public void Test_Commit_Frequency()
     {
-        
+        //Arrange 
+        var gitFetcher = new GitFetcher(onlineRepoPath);
+
+        //Act
+        var expected = new List<Freq>{
+            new Freq (2, new DateTime(11/10/2022)),
+            new Freq (1, new DateTime(07/10/2022)),
+            new Freq (3, new DateTime(06/10/2022)),
+            new Freq (2, new DateTime(25/09/2022)),
+            new Freq (2, new DateTime(21/10/2021)),
+            new Freq (3, new DateTime(15/10/2021)),
+            new Freq (2, new DateTime(04/10/2021)),
+            new Freq (1, new DateTime(03/10/2021)),
+            new Freq (1, new DateTime(02/10/2021)),
+            new Freq (1, new DateTime(24/09/2021))
+        };
+
+        var actual = gitFetcher.GitInsightFreq();
+
+        //Assert
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
+    public void Test_Commit_AuthorMode()
+    {
+        //Arrange 
+        var gitFetcher = new GitFetcher(onlineRepoPath);
+
+        //Act
+        var expected = new List<Author>{
+            new Author ("nkar", new List<Freq>{
+                new Freq (2, new DateTime(11/10/2022))
+            }),
+            new Author ("HelgeCPH", new List<Freq>{
+                new Freq (1, new DateTime(07/10/2022))
+            }),
+            new Author ("Rasmus Lystrom", new List<Freq>{
+                new Freq (3, new DateTime(06/10/2022)),
+                new Freq (2, new DateTime(25/09/2022)),
+                new Freq (2, new DateTime(21/10/2021)),
+                new Freq (2, new DateTime(04/10/2021)),
+                new Freq (1, new DateTime(03/10/2021)),
+                new Freq (1, new DateTime(02/10/2021)),
+                new Freq (1, new DateTime(24/09/2021))
+            }),
+            new Author ("Paolo Tell", new List<Freq>{
+                new Freq (3, new DateTime(15/10/2021))
+            })
+        };
+
+        var actual = gitFetcher.GitInsightAuth();
+
+        //Assert
+        Assert.Equal(expected, actual);
     }
 
     [Fact]

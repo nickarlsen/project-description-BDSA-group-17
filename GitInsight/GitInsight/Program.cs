@@ -8,7 +8,7 @@ public class Program
     {
 
         // var builder = WebApplication.CreateBuilder(args);
-        /*var builder = WebApplication.CreateBuilder(args);
+        var builder = WebApplication.CreateBuilder(args);
 
 
         // Add services to the container.
@@ -33,15 +33,16 @@ public class Program
 
         app.MapControllers();
 
-        app.Run();*/
+        app.Run();
 
+        /*
         Console.WriteLine("Please provide a Git repository url in the form \"owner/repository\"");
         Console.WriteLine("Here: ");
         var repoUrl = Console.ReadLine();
-        var gitFetcher = new GitFetcher(repoUrl!);
+        var gitFetcher = new GitFetcher(repoUrl!);*/
 
         //TODO Make a directory locally and clone into that
-        string mode = "";
+        /*string mode = "";
         bool doWhile = true;
         while (doWhile)
         {
@@ -49,15 +50,29 @@ public class Program
             mode = Console.ReadLine()!;
             if (mode.Equals("a"))
             {
-                gitFetcher.GitInsightAuth();
+                Console.WriteLine("You have selected Author mode");
+                var commits = gitFetcher.GitInsightAuth();
+                foreach (var commit in commits)
+                {
+                    Console.WriteLine(commit);
+                }
                 doWhile = false;
             }
             else if (mode.Equals("f"))
             {
-                gitFetcher.GitInsightFreq();
+                Console.WriteLine("You have selected Frequency mode");
+                Console.WriteLine(gitFetcher);
+                var commits = gitFetcher.GitInsightFreq();
+                foreach (var commit in commits)
+                {
+                    Console.WriteLine(commit);
+                }
                 doWhile = false;
             }
             else Console.WriteLine("Invalid input");
         }
+
+        
+        gitFetcher.RemoveClones();*/
     }
 }

@@ -2,13 +2,16 @@ namespace GitInsight;
 public class DBController
 {
 
-    public DBController()
+    string _localRepoPath;
+
+    public DBController(string localRepoPath)
     {
+        _localRepoPath = localRepoPath;
         //Makes an instance of DBController
 
     }
 
-    public void StartConnectionDBLocal(string localRepoPath)
+    public void StartConnectionDBLocal(string repoUrl)
     {
         var ds = new SqliteConnectionStringBuilder
         {
@@ -23,21 +26,22 @@ public class DBController
         var cmd = new SqliteCommand(stm, con);
         
         //TODO Read and load the .sql file into db
-        cmd.CommandText = "Drop Table if exists GitRepos";
+        /*cmd.CommandText = "Drop Table if exists GitRepos";
         cmd.ExecuteNonQuery();
 
         cmd.CommandText = "Drop Table if exists Commits";
         cmd.ExecuteNonQuery();
 
-        cmd.CommandText = "Create Table Commits (id INTEGER Primary Key, CONSTRAINT repoKey FOREIGN KEY REFERENCES GitRepos(owner, name),author VARCHAR(50),commitDate DATE)";
+        cmd.CommandText = "Create Table Commits (id INTEGER Primary Key, repoOwner VARCHAR(50), repoName VARCHAR(50), author VARCHAR(50), commitDate DATE, Foreign Key (repoOwner, repoName) References GitRepos(owner, name))";
         cmd.ExecuteNonQuery();
 
         cmd.CommandText = "Create Table GitRepos (owner VARCHAR(50),name VARCHAR(50),Primary Key(owner, name))";
+        cmd.ExecuteNonQuery();*/
+
+        cmd.CommandText = "Select * from Commits";
         cmd.ExecuteNonQuery();
-
-
         
-        stm = $"SELECT * FROM GitRepos WHERE name = '{localRepoPath}'";
+        stm = $"SELECT * FROM GitRepos WHERE name = '{repoUrl}'";
         cmd = new SqliteCommand(stm, con);
         SqliteDataReader rdr = cmd.ExecuteReader();
 
@@ -57,7 +61,7 @@ public class DBController
         }
         rdr.Close();
 
-        //InsertRepoIntoDB("tobias/tobias", cmd);
+        InsertRepoIntoDB(repoUrl, cmd);
     }
 
         //Attempted method to integrate Docker DB, Potentially used in the future
@@ -111,14 +115,11 @@ public class DBController
     public void InsertRepoIntoDB(string url, SqliteCommand cmd)
     {
         var urlArray = url.Split("/");
-        var author = urlArray.First();
+        var owner = urlArray.First();
         var name = urlArray.Last();
 
-        var stm = $"SELECT * FROM GitRepos WHERE name = '{author}' AND author = '{name}'";
-        cmd.CommandText = stm;
-        SqliteDataReader rdr = cmd.ExecuteReader();
 
-        
+        SqliteDataReader rdr = cmd.ExecuteReader();
         
         if (rdr.HasRows)
         {
@@ -130,7 +131,7 @@ public class DBController
         {
             Console.WriteLine("Repo does not exist in DB");
             rdr.Close();
-            cmd.CommandText = $"INSERT INTO GitRepos (author, name) VALUES ('{author}', '{name}')";
+            cmd.CommandText = $"INSERT INTO GitRepos (owner, name) VALUES ('{owner}', '{name}')";
             cmd.ExecuteNonQuery();
 
             InsertCommits(url, cmd);
@@ -149,8 +150,9 @@ public class DBController
         {
             var author = commit.Author.Name;
             var date = commit.Author.When;
-            var repoKey = (urlArray.First(), urlArray.Last());
-            cmd.CommandText = $"INSERT INTO Commits (repoKey, author, commitDate) VALUES ({repoKey}, '{author}', '{date}')";
+            var repoName = urlArray.Last();
+            var repoOwner = urlArray.First();
+            cmd.CommandText = $"INSERT INTO Commits (repoName, repoOwner, commitDate, author) VALUES ('{repoName}', '{repoOwner}', '{date}', '{author}')";
             cmd.ExecuteNonQuery();
         }
     }
@@ -161,9 +163,18 @@ public class DBController
         var urlAuthor = urlArray.First();
         var name = urlArray.Last();
 
+        
+
         var stm = $"SELECT Count(*) FROM Commits";
         cmd.CommandText = stm;
+
         SqliteDataReader rdr = cmd.ExecuteReader();
+        var numCommits = 0;
+        while (rdr.Read())
+        {
+            numCommits = rdr.GetInt32(0);
+            Console.WriteLine(numCommits);
+        }
 
         
         if (!rdr.HasRows)
@@ -175,18 +186,19 @@ public class DBController
         else
         {
 
-            rdr.Close();
-
-            var repo = new Repository(url);
+            
+            
+            var repo = new Repository(_localRepoPath);
             var commits = repo.Commits;
-            if (commits.Count() == rdr.GetInt32(0))
+            Console.WriteLine("No. of Commits in variable: " + commits.Count());
+            if (commits.Count() == numCommits)
             {
                 Console.WriteLine("No new commits");
             }
             else
             {
                 Console.WriteLine("New commits");
-                var neededCommits = rdr.GetInt32(0) - commits.Count();
+                var neededCommits = numCommits - commits.Count();
                 for (int i = 0; i < neededCommits; i++)
                 {
                     var commit = commits.ElementAt(i);
@@ -197,6 +209,7 @@ public class DBController
                     cmd.ExecuteNonQuery();
                 }
             }
+            rdr.Close();
             Console.WriteLine("commits already exists in DB");
         } 
     }

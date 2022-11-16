@@ -13,4 +13,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.10"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="6.0.10"/>
   </ItemGroup>
+  <ItemGroup>
+  <Content Remove="ClonedRepos\**" />
+  <Compile Remove="ClonedRepos\**" />
+  <EmbeddedResource Remove="ClonedRepos\**" />
+  <None Remove="ClonedRepos\**" />
+  </ItemGroup>
 </Project>

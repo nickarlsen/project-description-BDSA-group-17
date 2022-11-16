@@ -10,18 +10,35 @@ public class GitFetcher
         //An instance of GitFetcer will be made in Program.cs/main
         var httpsString = "https://github.com/";
         var workingDirectory = httpsString + repoUrl;
-        dbController = new DBController();
         
         localRepoPath = @"ClonedRepos";
+        //var repoName = repoUrl.Split("/");
+
+        dbController = new DBController(localRepoPath + @"\" + repoUrl);
+
         try
         {
+            Console.WriteLine(localRepoPath);
             System.IO.Directory.CreateDirectory(localRepoPath + $@"\{repoUrl}");
-            localRepoPath += $@"\{repoUrl}";
+            localRepoPath = $@"{localRepoPath}/{repoUrl}";
+            Console.WriteLine(localRepoPath);
+            
+             
+            
             var result = Repository.Clone(workingDirectory, localRepoPath, new CloneOptions()
             {
                 BranchName = "main",
+                
             });
+            Console.WriteLine(result);
             dbController.StartConnectionDBLocal(result);
+            
+            
+            Console.WriteLine("Repo already exists");
+            
+            
+            
+            Console.WriteLine("Everything is gucci");
         }
         catch (System.Exception e)
         {
@@ -134,5 +151,40 @@ public class GitFetcher
         }
     }
 
-    
+    public void RemoveClones()
+    {
+        Console.WriteLine("Removing Local Repos");
+        /*try 
+        {
+            System.IO.Directory.Delete(localRepoPath, true);
+        }
+        catch (System.Exception e)
+        {
+            Console.WriteLine(e.Message);
+            Console.WriteLine(e.StackTrace);
+        }*/
+        //Directory.Delete(localRepoPath + "/.git", true);
+        
+
+        System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(localRepoPath);
+
+        if (dir.Exists)
+        {
+            setAttributesNormal(dir);
+            dir.Delete(true);
+        }
+
+        
+
+        
+    }
+    public void setAttributesNormal(DirectoryInfo dir) 
+        {
+            foreach (var subDir in dir.GetDirectories())
+                setAttributesNormal(subDir);
+            foreach (var file in dir.GetFiles())
+            {
+                file.Attributes = FileAttributes.Normal;
+            }
+        }
 }

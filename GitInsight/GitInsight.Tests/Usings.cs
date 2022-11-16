@@ -1,3 +1,3 @@
 global using Xunit;
-global using static Program;
+global using GitInsight;
 global using LibGit2Sharp;
