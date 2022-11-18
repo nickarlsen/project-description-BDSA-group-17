@@ -27,8 +27,8 @@ public class GitFetcher
             
             var result = Repository.Clone(workingDirectory, localRepoPath, new CloneOptions()
             {
-                BranchName = "main",
-                
+                //BranchName = "main",
+                //BranchName = "master",
             });
             Console.WriteLine(result);
             dbController.StartConnectionDBLocal(result);
