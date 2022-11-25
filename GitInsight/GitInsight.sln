@@ -7,6 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitInsight", "GitInsight\Gi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitInsight.tests", "GitInsight.tests\GitInsight.tests.csproj", "{9C678919-9B76-45FE-94EB-90DEFDD88DFB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlazorApp", "BlazorApp", "{60433B5D-B325-400F-BB94-446534D9D47E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorWebAssemblyApp", "BlazorApp\BlazorWebAssemblyApp\BlazorWebAssemblyApp.csproj", "{97427A88-15AC-4856-93EC-226EC6BC3582}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitInsightBlazor", "GitInsightBlazor", "{3D96761A-75CE-42CD-898C-FD03536BD519}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitInsightBlazorApp", "GitInsightBlazor\GitInsightBlazorApp\GitInsightBlazorApp.csproj", "{A5D4B2A7-4393-4427-944B-D3DCA3581F01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +32,17 @@ Global
 		{9C678919-9B76-45FE-94EB-90DEFDD88DFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C678919-9B76-45FE-94EB-90DEFDD88DFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C678919-9B76-45FE-94EB-90DEFDD88DFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97427A88-15AC-4856-93EC-226EC6BC3582}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97427A88-15AC-4856-93EC-226EC6BC3582}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97427A88-15AC-4856-93EC-226EC6BC3582}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97427A88-15AC-4856-93EC-226EC6BC3582}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5D4B2A7-4393-4427-944B-D3DCA3581F01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5D4B2A7-4393-4427-944B-D3DCA3581F01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5D4B2A7-4393-4427-944B-D3DCA3581F01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5D4B2A7-4393-4427-944B-D3DCA3581F01}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{97427A88-15AC-4856-93EC-226EC6BC3582} = {60433B5D-B325-400F-BB94-446534D9D47E}
+		{A5D4B2A7-4393-4427-944B-D3DCA3581F01} = {3D96761A-75CE-42CD-898C-FD03536BD519}
 	EndGlobalSection
 EndGlobal

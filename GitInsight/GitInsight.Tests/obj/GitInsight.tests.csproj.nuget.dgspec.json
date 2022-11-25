@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight.tests\\GitInsight.tests.csproj": {}
+    "C:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight.tests\\GitInsight.tests.csproj": {}
   },
   "projects": {
-    "c:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight.tests\\GitInsight.tests.csproj": {
+    "C:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight.tests\\GitInsight.tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight.tests\\GitInsight.tests.csproj",
+        "projectUniqueName": "C:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight.tests\\GitInsight.tests.csproj",
         "projectName": "GitInsight.tests",
-        "projectPath": "c:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight.tests\\GitInsight.tests.csproj",
+        "projectPath": "C:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight.tests\\GitInsight.tests.csproj",
         "packagesPath": "C:\\Users\\nicka\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight.tests\\obj\\",
+        "outputPath": "C:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight.tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nicka\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,8 +28,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "c:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\GitInsight.csproj": {
-                "projectPath": "c:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\GitInsight.csproj"
+              "C:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\GitInsight.csproj": {
+                "projectPath": "C:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\GitInsight.csproj"
               }
             }
           }
@@ -44,6 +44,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "FluentAssertions": {
+              "target": "Package",
+              "version": "[6.8.0, )"
+            },
             "LibGit2Sharp": {
               "target": "Package",
               "version": "[0.26.2, )"
@@ -95,14 +99,14 @@
         }
       }
     },
-    "c:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\GitInsight.csproj": {
+    "C:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\GitInsight.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\GitInsight.csproj",
+        "projectUniqueName": "C:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\GitInsight.csproj",
         "projectName": "GitInsight",
-        "projectPath": "c:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\GitInsight.csproj",
+        "projectPath": "C:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\GitInsight.csproj",
         "packagesPath": "C:\\Users\\nicka\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\obj\\",
+        "outputPath": "C:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nicka\\AppData\\Roaming\\NuGet\\NuGet.Config",

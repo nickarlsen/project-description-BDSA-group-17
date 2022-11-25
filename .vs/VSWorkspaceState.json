@@ -3,8 +3,9 @@
     "",
     "\\GitInsight",
     "\\GitInsight\\GitInsight",
+    "\\GitInsight\\GitInsight.Tests",
     "\\GitInsight\\GitInsight\\ClonedRepos"
   ],
-  "SelectedNode": "\\GitInsight\\GitInsight\\Program.cs",
+  "SelectedNode": "\\GitInsight\\GitInsight.Tests\\UnitTest1.cs",
   "PreviewInSolutionExplorer": false
 }

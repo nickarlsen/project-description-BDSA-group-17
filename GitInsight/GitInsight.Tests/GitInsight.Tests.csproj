@@ -21,6 +21,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="LibGit2Sharp" Version="0.26.2"/>
+    <PackageReference Include="FluentAssertions" Version="6.8.0"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GitInsight\GitInsight.csproj"/>

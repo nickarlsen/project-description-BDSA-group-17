@@ -1,0 +1,63 @@
+﻿@page "/fetchdata"
+@inject HttpClient Http
+
+
+<PageTitle>Weather forecast</PageTitle>
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+                <th>Hello</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.CommitDate.ToShortDateString()</td>
+                    <td>@forecast.CountCommits</td>
+                    <td>Hello</td>
+                    <td>Hell</td>
+                    <td>World</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Freq[]? forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await Http.GetFromJsonAsync<Freq[]>("https://localhost:7200/Commit/Freq?repo=nickarlsen/assignment-05-group-12");
+        Console.WriteLine(forecasts);
+    }
+
+    public class WeatherForecast
+    {
+        public DateTime Date { get; set; }
+
+        public int TemperatureC { get; set; }
+
+        public string? Summary { get; set; }
+
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+    public record Freq(int CountCommits, DateTime CommitDate);
+    public record Author(string Name, IEnumerable<Freq> Freqs);
+}

@@ -10,6 +10,18 @@ public class Program
         // var builder = WebApplication.CreateBuilder(args);
         var builder = WebApplication.CreateBuilder(args);
 
+        var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+        builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                policy  =>
+                                {
+                                    policy.WithOrigins("https://localhost:7298");
+                                });
+            });
+
+
 
         // Add services to the container.
 
@@ -31,9 +43,13 @@ public class Program
 
         app.UseAuthorization();
 
+        app.UseCors(MyAllowSpecificOrigins);
+
         app.MapControllers();
 
         app.Run();
+
+        
 
         /*
         Console.WriteLine("Please provide a Git repository url in the form \"owner/repository\"");
@@ -72,7 +88,9 @@ public class Program
             else Console.WriteLine("Invalid input");
         }
 
+        */
         
-        gitFetcher.RemoveClones();*/
     }
+
+    
 }

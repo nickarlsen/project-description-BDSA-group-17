@@ -3,14 +3,19 @@ public class GitFetcher
 {
     private DBController dbController;
     private string localRepoPath;
+    private string shortLocalRepoPath;
     public GitFetcher(string repoUrl)
     {
+        
         
     
         //An instance of GitFetcer will be made in Program.cs/main
         var httpsString = "https://github.com/";
         var workingDirectory = httpsString + repoUrl;
         
+        
+        shortLocalRepoPath = @"ClonedRepos";
+        RemoveClones();
         localRepoPath = @"ClonedRepos";
         //var repoName = repoUrl.Split("/");
 
@@ -27,8 +32,8 @@ public class GitFetcher
             
             var result = Repository.Clone(workingDirectory, localRepoPath, new CloneOptions()
             {
-                BranchName = "main",
-                
+                //BranchName = "main",
+                //BranchName = "master",
             });
             Console.WriteLine(result);
             dbController.StartConnectionDBLocal(result);
@@ -45,6 +50,8 @@ public class GitFetcher
             Console.WriteLine(e.Message);
             Console.WriteLine(e.StackTrace);
         }
+
+
         
     }
 
@@ -64,7 +71,6 @@ public class GitFetcher
             
             //Console.WriteLine(repo.);
             var commits = repo.Commits.ToList();
-            var dates = GetAllCommitDates();
             var commitsQuery =
                         from commit in commits
                         group commit by commit.Author.When.Date into g
@@ -135,22 +141,6 @@ public class GitFetcher
         }
     }
 
-    public IEnumerable<DateTimeOffset> GetAllCommitDates()
-    {
-        using (var repo = new Repository(localRepoPath))
-        {
-            var commits = repo.Commits.ToList();
-            foreach (var i in commits)
-            {
-                var currDay = i.Author.When.Day;
-                var currMonth = i.Author.When.Month;
-                var currYear = i.Author.When.Year;
-                yield return new DateTimeOffset(new DateTime(currYear, currMonth, currDay));
-                
-            }
-        }
-    }
-
     public void RemoveClones()
     {
         Console.WriteLine("Removing Local Repos");
@@ -166,25 +156,28 @@ public class GitFetcher
         //Directory.Delete(localRepoPath + "/.git", true);
         
 
-        System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(localRepoPath);
+        System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(shortLocalRepoPath);
 
         if (dir.Exists)
         {
             setAttributesNormal(dir);
+            Console.WriteLine("Deleting cloned repos now");
             dir.Delete(true);
-        }
-
-        
-
-        
+        }    
     }
+
     public void setAttributesNormal(DirectoryInfo dir) 
         {
             foreach (var subDir in dir.GetDirectories())
                 setAttributesNormal(subDir);
             foreach (var file in dir.GetFiles())
             {
-                file.Attributes = FileAttributes.Normal;
+                Console.WriteLine("Writing file:");
+                Console.WriteLine(file);
+            
+                //var currFile = 
+                File.SetAttributes(file.FullName, FileAttributes.Normal);
+                //file.Attributes = FileAttributes.Normal;
             }
         }
 }

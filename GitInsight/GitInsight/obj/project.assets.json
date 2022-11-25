@@ -3019,11 +3019,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\GitInsight.csproj",
+      "projectUniqueName": "C:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\GitInsight.csproj",
       "projectName": "GitInsight",
-      "projectPath": "c:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\GitInsight.csproj",
+      "projectPath": "C:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\GitInsight.csproj",
       "packagesPath": "C:\\Users\\nicka\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\obj\\",
+      "outputPath": "C:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\nicka\\AppData\\Roaming\\NuGet\\NuGet.Config",

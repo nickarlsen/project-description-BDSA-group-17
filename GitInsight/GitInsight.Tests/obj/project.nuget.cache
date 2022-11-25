@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "kCgbrunPctcacvqgWyQlzlH/MHXILj5kLYFWmQAVbUc7IlitOAhMTNRuR8Q84r2vwJbhi64ubtWwvZlkgK2pAA==",
+  "dgSpecHash": "dSKsF08pioztUFioOuhIYalrLC49CjocBzpwAHl6kPgmI1RsDB58EmIK8fDNWjeb637FvQf6zVouNSy5de9p7A==",
   "success": true,
-  "projectFilePath": "c:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight.tests\\GitInsight.tests.csproj",
+  "projectFilePath": "C:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight.tests\\GitInsight.tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nicka\\.nuget\\packages\\coverlet.collector\\3.1.2\\coverlet.collector.3.1.2.nupkg.sha512",
     "C:\\Users\\nicka\\.nuget\\packages\\coverlet.msbuild\\3.1.2\\coverlet.msbuild.3.1.2.nupkg.sha512",
+    "C:\\Users\\nicka\\.nuget\\packages\\fluentassertions\\6.8.0\\fluentassertions.6.8.0.nupkg.sha512",
     "C:\\Users\\nicka\\.nuget\\packages\\libgit2sharp\\0.26.2\\libgit2sharp.0.26.2.nupkg.sha512",
     "C:\\Users\\nicka\\.nuget\\packages\\libgit2sharp.nativebinaries\\2.0.306\\libgit2sharp.nativebinaries.2.0.306.nupkg.sha512",
     "C:\\Users\\nicka\\.nuget\\packages\\microsoft.codecoverage\\17.1.0\\microsoft.codecoverage.17.1.0.nupkg.sha512",

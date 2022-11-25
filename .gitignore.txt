@@ -1,5 +1,4 @@
-somefolder/*
-!somefolder/.gitkeep 
+/ClonedRepos
 .vs/
 .vscode/
 .db
