@@ -274,4 +274,7 @@ C:\Users\spoor\Desktop\Software\C#\Assignments\project-description-BDSA-group-17
 C:\Users\spoor\Desktop\Software\C#\Assignments\project-description-BDSA-group-17\GitInsight\GitInsight\obj\Debug\net6.0\ref\GitInsight.dll
 C:\Users\spoor\Desktop\Software\C#\Assignments\project-description-BDSA-group-17\GitInsight\GitInsight\obj\Debug\net6.0\GitInsight.pdb
 C:\Users\spoor\Desktop\Software\C#\Assignments\project-description-BDSA-group-17\GitInsight\GitInsight\obj\Debug\net6.0\GitInsight.genruntimeconfig.cache
+<<<<<<< HEAD
+>>>>>>> 33b9e48017863267516f1632b900adaff4b498d6
+=======
 >>>>>>> 33b9e48017863267516f1632b900adaff4b498d6

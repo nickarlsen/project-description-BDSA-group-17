@@ -1,14 +1,22 @@
 ﻿@page "/fetchdata"
 @inject HttpClient Http
 
+<!-- dotnet add package Radzen.Blazor -->
 
-<PageTitle>Weather forecast</PageTitle>
+<PageTitle>Weather commit</PageTitle>
 
-<h1>Weather forecast</h1>
+<h1>Github Repository Insight</h1>
 
 <p>This component demonstrates fetching data from the server.</p>
+<p>Owner of Repository:<input @bind="repoOwner"/></p>
+<p>Name of Repository:<input @bind="repoName"/></p>
+<button @onclick="GetCommits">Get Insights</button>
+<ul>
+    <li><code>Owner</code>: @repoOwner</li>
+    <li><code>Name</code>: @repoName</li>
+</ul>
 
-@if (forecasts == null)
+@if (commits == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -18,18 +26,18 @@ else
         <thead>
             <tr>
                 <th>Date</th>
-                <th>Temp. (C)</th>
+                <th>Amount of commits</th>
                 <th>Temp. (F)</th>
                 <th>Summary</th>
                 <th>Hello</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var commit in commits)
             {
                 <tr>
-                    <td>@forecast.CommitDate.ToShortDateString()</td>
-                    <td>@forecast.CountCommits</td>
+                    <td>@commit.CommitDate.ToShortDateString()</td>
+                    <td>@commit.CountCommits</td>
                     <td>Hello</td>
                     <td>Hell</td>
                     <td>World</td>
@@ -40,24 +48,25 @@ else
 }
 
 @code {
-    private Freq[]? forecasts;
 
-    protected override async Task OnInitializedAsync()
+    private string? repoOwner;
+    private string? repoName { get; set; }
+
+    private Freq[]? commits;
+
+
+
+    /*protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<Freq[]>("https://localhost:7200/Commit/Freq?repo=nickarlsen/assignment-05-group-12");
-        Console.WriteLine(forecasts);
+        commits = await Http.GetFromJsonAsync<Freq[]>("https://localhost:7200/Commit/Freq?repo=nickarlsen/assignment-05-group-12");
+        Console.WriteLine(commits);
+    }*/
+
+    public async void GetCommits() {
+        commits = await Http.GetFromJsonAsync<Freq[]>($"https://localhost:7200/Commit/Freq?repo={repoOwner}/{repoName}");
+        Console.WriteLine(commits);
     }
 
-    public class WeatherForecast
-    {
-        public DateTime Date { get; set; }
-
-        public int TemperatureC { get; set; }
-
-        public string? Summary { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-    }
     public record Freq(int CountCommits, DateTime CommitDate);
     public record Author(string Name, IEnumerable<Freq> Freqs);
 }

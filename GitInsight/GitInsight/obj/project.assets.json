@@ -2837,11 +2837,19 @@
     "version": "1.0.0",
     "restore": {
 <<<<<<< HEAD
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\GitInsight.csproj",
       "projectName": "GitInsight",
       "projectPath": "C:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\GitInsight.csproj",
       "packagesPath": "C:\\Users\\nicka\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\nicka\\OneDrive\\Skrivebord\\BDSA\\Repos\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\obj\\",
+=======
+      "projectUniqueName": "C:\\Users\\spoor\\Desktop\\Software\\C#\\Assignments\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\GitInsight.csproj",
+      "projectName": "GitInsight",
+      "projectPath": "C:\\Users\\spoor\\Desktop\\Software\\C#\\Assignments\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\GitInsight.csproj",
+      "packagesPath": "C:\\Users\\spoor\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\spoor\\Desktop\\Software\\C#\\Assignments\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\obj\\",
+>>>>>>> 33b9e48017863267516f1632b900adaff4b498d6
 =======
       "projectUniqueName": "C:\\Users\\spoor\\Desktop\\Software\\C#\\Assignments\\project-description-BDSA-group-17\\GitInsight\\GitInsight\\GitInsight.csproj",
       "projectName": "GitInsight",

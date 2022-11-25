@@ -21,7 +21,7 @@ public class CommitController : ControllerBase
     {
         gitFetcher = new GitFetcher(repo);
         var commits = gitFetcher.GitInsightFreq();
-        //gitFetcher.RemoveClones();
+        
         foreach (var commit in commits)
         {
             yield return commit;
@@ -34,7 +34,7 @@ public class CommitController : ControllerBase
     {
         gitFetcher = new GitFetcher(repo);
         var commits = gitFetcher.GitInsightAuth();
-        //gitFetcher.RemoveClones();
+        
         foreach (var commit in commits)
         {
             yield return commit;

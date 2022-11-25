@@ -3,7 +3,7 @@ public class GitFetcher
 {
     private DBController dbController;
     private string localRepoPath;
-    private string shortLocalRepoPath;
+    public string shortLocalRepoPath;
     public GitFetcher(string repoUrl)
     {
         
@@ -15,7 +15,7 @@ public class GitFetcher
         
         
         shortLocalRepoPath = @"ClonedRepos";
-        RemoveClones();
+        //RemoveClones(shortLocalRepoPath);
         localRepoPath = @"ClonedRepos";
         //var repoName = repoUrl.Split("/");
 
@@ -49,10 +49,7 @@ public class GitFetcher
         {
             Console.WriteLine(e.Message);
             Console.WriteLine(e.StackTrace);
-        }
-
-
-        
+        }        
     }
 
     public void CheckDBData() 
@@ -76,13 +73,14 @@ public class GitFetcher
                         group commit by commit.Author.When.Date into g
                         select new {g, commit = g.ToList().Count()};
             
-            
+            //repo.Dispose();
             foreach (var i in commitsQuery)
             {
                 
                 Console.WriteLine(i.commit + " " + i.g.First().Author.When.Date.ToString("dd/MM/yyyy"));
                 yield return(new Freq(i.commit, i.g.First().Author.When.Date));
             }
+            
         }
     }
 
@@ -93,7 +91,7 @@ public class GitFetcher
         {
             var commits = repo.Commits.ToList();
             var authors = GetAllAuthors(commits);
-            
+            //repo.Dispose();
             foreach (string author in authors)
             {
                 var tempCommitList = new List<Commit>();
@@ -112,12 +110,15 @@ public class GitFetcher
                         select new {g, commit = g.ToList().Count()};
 
                 var tempFreqs = new List<Freq>();
+                
                 foreach (var i in commitsQuery)
                 {
                     Console.WriteLine("    " + i.commit + " " + i.g.First().Author.When.Date.ToString("dd/MM/yyyy"));
                     tempFreqs.Add(new Freq(i.commit, i.g.First().Author.When.Date));
                     
                 }
+
+                
 
                 
                 yield return new Author(author, tempFreqs);
@@ -141,21 +142,31 @@ public class GitFetcher
         }
     }
 
-    public void RemoveClones()
+    public void RemoveClones(string targetDir)
+    {
+        File.SetAttributes(targetDir, FileAttributes.Normal);
+
+        string[] files = Directory.GetFiles(targetDir);
+        string[] dirs = Directory.GetDirectories(targetDir);
+
+        foreach (string file in files)
+        {
+            File.SetAttributes(file, FileAttributes.Normal);
+            File.Delete(file);
+        }
+
+        foreach (string dir in dirs)
+        {
+            RemoveClones(dir);
+        }
+
+        Directory.Delete(targetDir, false);
+    }
+
+    /*public void RemoveClones()
     {
         Console.WriteLine("Removing Local Repos");
-        /*try 
-        {
-            System.IO.Directory.Delete(localRepoPath, true);
-        }
-        catch (System.Exception e)
-        {
-            Console.WriteLine(e.Message);
-            Console.WriteLine(e.StackTrace);
-        }*/
-        //Directory.Delete(localRepoPath + "/.git", true);
-        
-
+       
         System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(shortLocalRepoPath);
 
         if (dir.Exists)
@@ -179,5 +190,5 @@ public class GitFetcher
                 File.SetAttributes(file.FullName, FileAttributes.Normal);
                 //file.Attributes = FileAttributes.Normal;
             }
-        }
+        }*/
 }
