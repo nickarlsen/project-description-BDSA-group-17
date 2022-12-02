@@ -10,26 +10,26 @@
 <p>This component demonstrates fetching data from the server.</p>
 <p>Owner of Repository:<input @bind="repoOwner"/></p>
 <p>Name of Repository:<input @bind="repoName"/></p>
-<button @onclick="GetCommits">Get Insights</button>
+<button @onclick="AuthMode">Author Mode</button>
+<button @onclick="FreqMode">Frequency Mode</button>
 <ul>
     <li><code>Owner</code>: @repoOwner</li>
     <li><code>Name</code>: @repoName</li>
 </ul>
 
-@if (commits == null)
+@if (commits == null && authorWithCommits == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
+    @if (commits != null) 
+    {
     <table class="table">
         <thead>
             <tr>
                 <th>Date</th>
                 <th>Amount of commits</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
-                <th>Hello</th>
             </tr>
         </thead>
         <tbody>
@@ -38,13 +38,35 @@ else
                 <tr>
                     <td>@commit.CommitDate.ToShortDateString()</td>
                     <td>@commit.CountCommits</td>
-                    <td>Hello</td>
-                    <td>Hell</td>
-                    <td>World</td>
                 </tr>
             }
         </tbody>
     </table>
+    } 
+    else if (authorWithCommits != null) 
+    {
+        @foreach (var authorWithCommit in authorWithCommits)
+        {
+            <p>@authorWithCommit.Name</p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount of commits</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var commit in authorWithCommit.Freqs)
+                    {
+                        <tr>
+                            <td>@commit.CommitDate.ToShortDateString()</td>
+                            <td>@commit.CountCommits</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
 }
 
 @code {
@@ -53,6 +75,7 @@ else
     private string? repoName { get; set; }
 
     private Freq[]? commits;
+    private Author[]? authorWithCommits;
 
 
 
@@ -62,10 +85,18 @@ else
         Console.WriteLine(commits);
     }*/
 
-    public async void GetCommits() {
+    public async void FreqMode() {
+        authorWithCommits = null;
         commits = await Http.GetFromJsonAsync<Freq[]>($"https://localhost:7200/Commit/Freq?repo={repoOwner}/{repoName}");
         Console.WriteLine(commits);
     }
+
+    public async void AuthMode() {
+        commits = null;
+        authorWithCommits = await Http.GetFromJsonAsync<Author[]>($"https://localhost:7200/Commit/Auth?repo={repoOwner}/{repoName}");
+        Console.WriteLine(commits);
+    }
+    
 
     public record Freq(int CountCommits, DateTime CommitDate);
     public record Author(string Name, IEnumerable<Freq> Freqs);

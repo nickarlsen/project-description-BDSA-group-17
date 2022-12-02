@@ -196,13 +196,13 @@
       "mscorlib.dll": "sha256-SboUbkX8s5RVQGtnN5Q67MBZW0I\/P3aeEMENJq8gv8M=",
       "netstandard.dll": "sha256-lZ8L5iiSghlvyt2ie2YdBYAtJbVa4mvpvBX3W9ihjLc=",
       "System.Private.CoreLib.dll": "sha256-jECkJy2Sjpl59QEL3nO3p8nwKGXvnJpXaKQF\/+MTw04=",
-      "GitInsightBlazorApp.dll": "sha256-hLZ53vlIYOW8pkihOZ48Nk+l5Ahqoq1ABLBTwKam3bU="
+      "GitInsightBlazorApp.dll": "sha256-K3bjSQxg\/\/\/b1KE5O6doAFoMxhLYupJyOJaVLX3Q54o="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
-      "GitInsightBlazorApp.pdb": "sha256-FAxIv1nkai+dywWom6x2a91b3Sp65qTGBlau+Y9XEQk="
+      "GitInsightBlazorApp.pdb": "sha256-1sk2ei1w\/jlDhOrVZm5KCOE4isuTrHZ5uMc5gl\/JEUA="
     },
     "runtime": {
       "dotnet.6.0.10.rnt6hokpi3.js": "sha256-KtM3Wrooexmrt5NmqvZfWoDPtNIe6wZqLopR6ToqUPg=",

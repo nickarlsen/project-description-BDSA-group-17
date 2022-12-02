@@ -116,11 +116,7 @@ public class GitFetcher
                     Console.WriteLine("    " + i.commit + " " + i.g.First().Author.When.Date.ToString("dd/MM/yyyy"));
                     tempFreqs.Add(new Freq(i.commit, i.g.First().Author.When.Date));
                     
-                }
-
-                
-
-                
+                } 
                 yield return new Author(author, tempFreqs);
                 
             }

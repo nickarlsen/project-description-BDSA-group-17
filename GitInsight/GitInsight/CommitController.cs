@@ -33,11 +33,11 @@ public class CommitController : ControllerBase
     public IEnumerable<Author> GetAuth(string repo)
     {
         gitFetcher = new GitFetcher(repo);
-        var commits = gitFetcher.GitInsightAuth();
+        var authorWithCommits = gitFetcher.GitInsightAuth();
         
-        foreach (var commit in commits)
+        foreach (var authorWithCommit in authorWithCommits)
         {
-            yield return commit;
+            yield return authorWithCommit;
         }
     }
 }
